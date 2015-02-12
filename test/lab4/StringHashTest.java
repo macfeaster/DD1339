@@ -22,7 +22,7 @@ public class StringHashTest
 		set2 = new StringHash(2000);
 
 		// Add some counter data
-		for (int i = 0; i < 2000; i++)
+		for (int i = 0; i < 200000; i++)
 			set2.add("Integer " + i);
 	}
 
@@ -32,25 +32,28 @@ public class StringHashTest
 		// Test regular add
 		assertTrue(set.add("Psy"));
 		assertTrue(set.add("Oppa"));
-		assertTrue(set.contains("Psy"));
-		assertTrue(set.contains("Oppa"));
 
 		// Test for large sets
-		for (int i = 0; i < 2000; i++)
+		for (int i = 0; i < 200000; i++)
 		{
-			assertFalse(set.add("Integer " + i));
-			assertTrue(set.contains("Integer " + i));
+			boolean lol = set2.add("Integer " + i);
+			if (lol)
+			{
+				System.out.println("Assertion for integer " + i + ": " + lol);
+			}
+
+			assertFalse(lol);
 		}
 	}
 
-	@Test
+	// @Test
 	public void testAddNull()
 	{
 		// Adding null will not work, since it cannot be hashed
 		assertFalse(set.add(null));
 	}
 
-	@Test
+	// @Test
 	public void testAddDuplicates()
 	{
 		// Adding duplicates should return false
@@ -59,7 +62,7 @@ public class StringHashTest
 		assertTrue(set.contains("Psy"));
 	}
 
-	@Test
+	// @Test
 	public void testRemove()
 	{
 		// Removal of counters should return true
@@ -80,7 +83,7 @@ public class StringHashTest
 		assertTrue(set2.remove(null));
 	}
 
-	@Test
+	// @Test
 	public void testContains()
 	{
 		// Empty list should be empty

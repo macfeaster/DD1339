@@ -54,9 +54,15 @@ public class StringHash implements StringDictionary
 		// Calculate index position based on hashcode
 		int i = h(s);
 		ListElement c = new ListElement(s);
-		c.next = table[i];
+		boolean contains = !contains(s);
 
-		return contains(s);
+		if (table[i] == null)
+			table[i] = c;
+		else
+			c.next = table[i];
+
+		// System.out.println(table[i] + " contains " + s + ": " + contains(s));
+		return contains;
 	}
 
 	/**
@@ -118,23 +124,14 @@ public class StringHash implements StringDictionary
 		do
 		{
 			if (c.value.equals(s))
+			{
+				System.out.println("Value c: " + c + " equals " + s);
 				return true;
+			}
 
 			c = c.next;
 		}
-		while (c.next != null);
-
-		if (c.value.equals(s))
-			return true;
-
-		while (c.next != null)
-		{
-			// If the String is already in the list, return false
-			if (c.value.equals(s))
-				return true;
-
-			c = c.next;
-		}
+		while (c != null && c.next != null);
 
 		return false;
 	}
