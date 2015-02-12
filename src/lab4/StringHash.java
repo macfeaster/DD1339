@@ -47,10 +47,6 @@ public class StringHash implements StringDictionary
 	@Override
 	public boolean add(String s)
 	{
-		// Null cannot be hashed, and thus addition of it is prohibited
-		if (s == null)
-			return false;
-
 		// Calculate index position based on hashcode
 		int i = h(s);
 		ListElement c = new ListElement(s);
@@ -61,7 +57,6 @@ public class StringHash implements StringDictionary
 		else
 			c.next = table[i];
 
-		// System.out.println(table[i] + " contains " + s + ": " + contains(s));
 		return contains;
 	}
 
@@ -78,24 +73,14 @@ public class StringHash implements StringDictionary
 	public boolean remove(String s)
 	{
 		int i = h(s);
-		ListElement c = table[i];
 
-		// If the first element at table[i] does not exist, create it
-		if (c == null)
-			return false;
-
-		// Traverse the list at table[i] until its end
-		while (c.next != null)
-		{
-			// If the String is already in the list, return false
-			if (c.next.value.equals(s))
-			{
-				c.next = c.next.next;
-				return true;
-			}
-
-			c = c.next;
-		}
+		for (ListElement e = table[i]; e != null; e = e.next)
+			if (e.next != null)
+				if (s.equals(e.next.value))
+				{
+					e.next = e.next.next;
+					return true;
+				}
 
 		return false;
 	}
@@ -111,27 +96,11 @@ public class StringHash implements StringDictionary
 	@Override
 	public boolean contains(String s)
 	{
-		// Null cannot be hashed, and thus it is never a value
-		if (s == null)
-			return false;
-
 		int i = h(s);
-		ListElement c = table[i];
 
-		if (c == null)
-			return false;
-
-		do
-		{
-			if (c.value.equals(s))
-			{
-				System.out.println("Value c: " + c + " equals " + s);
+		for (ListElement e = table[i]; e != null; e = e.next)
+			if (s.equals(e.value))
 				return true;
-			}
-
-			c = c.next;
-		}
-		while (c != null && c.next != null);
 
 		return false;
 	}
@@ -142,5 +111,11 @@ public class StringHash implements StringDictionary
 	 * @param s		Input string
 	 * @return		Table index
 	 */
-	private int h(String s) { return Math.abs(s.hashCode() % size); }
+	private int h(String s)
+	{
+		if (s == null)
+			return 0;
+		else
+			return Math.abs(s.hashCode() % size);
+	}
 }

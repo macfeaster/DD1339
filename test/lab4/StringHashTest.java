@@ -19,10 +19,10 @@ public class StringHashTest
 	{
 		// Set up dictionaries
 		set = new StringHash(2);
-		set2 = new StringHash(2000);
+		set2 = new StringHash(20000);
 
 		// Add some counter data
-		for (int i = 0; i < 200000; i++)
+		for (int i = 0; i < 552; i++)
 			set2.add("Integer " + i);
 	}
 
@@ -34,7 +34,7 @@ public class StringHashTest
 		assertTrue(set.add("Oppa"));
 
 		// Test for large sets
-		for (int i = 0; i < 200000; i++)
+		for (int i = 0; i < 552; i++)
 		{
 			boolean lol = set2.add("Integer " + i);
 			if (lol)
