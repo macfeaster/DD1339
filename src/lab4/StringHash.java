@@ -47,17 +47,31 @@ public class StringHash implements StringDictionary
 	@Override
 	public boolean add(String s)
 	{
-		// Calculate index position based on hashcode
-		int i = h(s);
-		ListElement c = new ListElement(s);
-		boolean contains = !contains(s);
+		// One must add actual Strings to a StringHash
+		if (s == null)
+			return false;
 
+		// Calculate slot position based on hashcode
+		int i = h(s);
+
+		// Create a new element for the String
+		ListElement c = new ListElement(s);
+
+		// If the dictionary contains the String, return false
+		if(contains(s))
+			return false;
+
+		// If this slot is empty, populate it
 		if (table[i] == null)
 			table[i] = c;
 		else
+		{
+			// If not, insert the new element
 			c.next = table[i];
+			table[i] = c;
+		}
 
-		return contains;
+		return true;
 	}
 
 	/**
@@ -72,16 +86,31 @@ public class StringHash implements StringDictionary
 	@Override
 	public boolean remove(String s)
 	{
+		// Null cannot be removed, since null is prohibited
+		if (s == null)
+			return false;
+
+		// Calculate slot position based on hashcode
 		int i = h(s);
 
-		for (ListElement e = table[i]; e != null; e = e.next)
-			if (e.next != null)
-				if (s.equals(e.next.value))
-				{
-					e.next = e.next.next;
-					return true;
-				}
+		// Iterate over the elements in the linked list:
+		//    e: current element
+		//    prev: previous element
+		for (ListElement e = table[i], prev = e; e != null; prev = e, e = e.next)
+			if (e.value.equals(s))
+			{
+				// If element to be removed is first within the list,
+				// move the list one step
+				if (e == table[i])
+					table[i] = table[i].next;
+				// Otherwise have its predecessor point to its successor
+				else
+					prev.next = e.next;
 
+				return true;
+			}
+
+		// Element was not found
 		return false;
 	}
 
@@ -96,8 +125,14 @@ public class StringHash implements StringDictionary
 	@Override
 	public boolean contains(String s)
 	{
+		// Null cannot be removed, since null is prohibited
+		if (s == null)
+			return false;
+
+		// Calculate slot position based on hashcode
 		int i = h(s);
 
+		// Look in the appropriate slot, if found return true
 		for (ListElement e = table[i]; e != null; e = e.next)
 			if (s.equals(e.value))
 				return true;
@@ -113,9 +148,6 @@ public class StringHash implements StringDictionary
 	 */
 	private int h(String s)
 	{
-		if (s == null)
-			return 0;
-		else
-			return Math.abs(s.hashCode() % size);
+		return Math.abs(s.hashCode() % size);
 	}
 }
