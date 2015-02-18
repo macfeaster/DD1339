@@ -8,7 +8,7 @@ public interface Stack<T>
      * Pushes an element o into the top of the stack,
      * i.e. adds it to the first position of it.
      *
-     * @param o     Object to insert.
+     * @param o     Object to add.
      */
     public void push(T o);
 
