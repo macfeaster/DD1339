@@ -7,6 +7,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * Tree implementation tests.
+ *
+ * @author Mauritz Zachrisson
+ */
 public class TreeTest
 {
 	Tree<Integer> t = new Tree<>();
@@ -22,10 +27,12 @@ public class TreeTest
 	@Test
 	public void testContains()
 	{
+		// Test existent data
 		assertTrue(t.contains(1));
 		assertTrue(t.contains(2));
 		assertTrue(t.contains(3));
 
+		// Test non-existent data
 		assertFalse(t.contains(4));
 		assertFalse(t.contains(null));
 	}
@@ -62,8 +69,10 @@ public class TreeTest
 	@Test
 	public void testSize()
 	{
+		// Test standard data
 		assertEquals(3, t.size());
 
+		// Test size reflects new additions
 		assertTrue(t.add(4));
 		assertTrue(t.add(5));
 		assertTrue(t.add(6));
@@ -73,27 +82,51 @@ public class TreeTest
 	@Test
 	public void testDepth()
 	{
+		// Test standard data
 		assertEquals(3, t.depth());
 
-		Tree<Integer> t2 = new Tree<>();
 
-		t2.add(20);
+		// Test linear depth
+		Tree<Integer> t3 = new Tree<>();
+		t3.add(20); // Root node
+		t3.add(10); // root.left
+		t3.add(8); // 10.left
+		t3.add(6); // 8.left
+		t3.add(4); // 6.left => depth = 5
+		assertEquals(5, t3.depth());
+
+		// Test balanced tree
+		Tree<Integer> t2 = new Tree<>();
 		t2.add(10);
-		t2.add(15);
-		assertEquals(3, t2.depth());
+		t2.add(20);
+		t2.add(5);
+		assertEquals(2, t2.depth());
 	}
 
 	@Test
 	public void testLeaves()
 	{
+		// Test linear tree (has one leaf)
 		Tree<Integer> t2 = new Tree<>();
-		t2.add(20); // Root node
-		t2.add(10); // root.left
-		t2.add(8); // 10.left
-		t2.add(6); // 8.left
-		t2.add(4); // 6.left => depth = 4
+		t2.add(20);
+		t2.add(10);
+		t2.add(8);
+		t2.add(6);
+		t2.add(4);
 
 		assertEquals(1, t2.leaves());
+
+		// Test the following three-leaf tree:
+		//		50
+		//	25		75
+		// 12 37
+		Tree<Integer> t3 = new Tree<>();
+		t3.add(50);
+		t3.add(25);
+		t3.add(75);
+		t3.add(12);
+		t3.add(37);
+		assertEquals(3, t3.leaves());
 	}
 
 	@Test
