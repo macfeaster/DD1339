@@ -1,4 +1,5 @@
-import chapter09.LinkedList;
+package lab2;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

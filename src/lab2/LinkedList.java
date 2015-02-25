@@ -1,4 +1,4 @@
-package chapter09;
+package lab2;
 
 /**
  * A singly linked list.

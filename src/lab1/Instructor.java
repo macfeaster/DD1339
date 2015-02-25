@@ -1,4 +1,4 @@
-package chapter08;
+package lab1;
 
 public class Instructor extends Person
 {

@@ -1,8 +1,5 @@
 package lab3;
 
-import stack.GenericStack;
-import stack.Stack;
-
 /**
  * The Postfix class implements an evaluator for integer postfix expressions.
  *

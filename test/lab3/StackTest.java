@@ -1,4 +1,4 @@
-package stack;
+package lab3;
 
 import org.junit.Test;
 
@@ -21,10 +21,10 @@ public class StackTest
     @Test(expected = NoSuchElementException.class)
     public void testTop() throws Exception
     {
-        // Test for empty stack
+        // Test for empty lab3.stack
         stack.top();
 
-        // Test for populated stack
+        // Test for populated lab3.stack
         stack.push("Top");
         assertEquals("Top", stack.top());
     }
@@ -32,10 +32,10 @@ public class StackTest
     @Test(expected = NoSuchElementException.class)
     public void testPop() throws Exception
     {
-        // Test for empty stack
+        // Test for empty lab3.stack
         stack.pop();
 
-        // Test for populated stack
+        // Test for populated lab3.stack
         stack.push("Top");
         stack.push("Topmost");
         assertEquals("Topmost", stack.pop());
@@ -45,10 +45,10 @@ public class StackTest
     @Test
     public void testSize() throws Exception
     {
-        // Test for empty stack
+        // Test for empty lab3.stack
         assertEquals(0, stack.size());
 
-        // Test for regular stack
+        // Test for regular lab3.stack
         stack.push("Top");
         stack.push("Topmost");
     }
@@ -56,14 +56,14 @@ public class StackTest
     @Test
     public void testIsEmpty() throws Exception
     {
-        // Test for empty stack
+        // Test for empty lab3.stack
         assertEquals(true, stack.isEmpty());
 
-        // Test for populated stack
+        // Test for populated lab3.stack
         stack.push("Element");
         assertEquals(false, stack.isEmpty());
 
-        // Test for popped stack
+        // Test for popped lab3.stack
         stack.pop();
         assertEquals(true, stack.isEmpty());
     }

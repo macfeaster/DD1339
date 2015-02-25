@@ -13,7 +13,7 @@
  * Last modified 1/22/15 3:44 PM
  */
 
-package chapter08;
+package lab1;
 
 public class Runner
 {

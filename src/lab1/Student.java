@@ -1,4 +1,4 @@
-package chapter08;
+package lab1;
 
 /**
  * The Student class is an extension of the lab3.Person class,

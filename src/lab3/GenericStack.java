@@ -1,4 +1,4 @@
-package stack;
+package lab3;
 
 import java.util.NoSuchElementException;
 
@@ -10,11 +10,11 @@ import java.util.NoSuchElementException;
  */
 public class GenericStack<T> implements Stack<T>
 {
-	private StackElement<T> top;    // Top element in stack.
-	private int size;               // Number of elements in stack.
+	private StackElement<T> top;    // Top element in lab3.stack.
+	private int size;               // Number of elements in lab3.stack.
 
 	/**
-	 * A stack element.
+	 * A lab3.stack element.
 	 */
 	private static class StackElement<T>
 	{
@@ -29,7 +29,7 @@ public class GenericStack<T> implements Stack<T>
 	}
 
 	/**
-	 * Creates an empty stack.
+	 * Creates an empty lab3.stack.
 	 */
 	public GenericStack()
 	{
@@ -38,7 +38,7 @@ public class GenericStack<T> implements Stack<T>
 	}
 
 	/**
-	 * Inserts the given element at the beginning of this stack.
+	 * Inserts the given element at the beginning of this lab3.stack.
 	 */
 	@Override
 	public void push(T element)
@@ -51,8 +51,8 @@ public class GenericStack<T> implements Stack<T>
 	}
 
 	/**
-	 * Returns the top element of this stack.
-	 * Returns <code>null</code> if the stack is empty.
+	 * Returns the top element of this lab3.stack.
+	 * Returns <code>null</code> if the lab3.stack is empty.
 	 */
 	@Override
 	public T top() throws NoSuchElementException
@@ -64,7 +64,7 @@ public class GenericStack<T> implements Stack<T>
 	}
 
 	/**
-	 * Removes and returns the top element from this stack.
+	 * Removes and returns the top element from this lab3.stack.
 	 * Returns <code>null</code> if the list is empty.
 	 */
 	@Override
@@ -84,7 +84,7 @@ public class GenericStack<T> implements Stack<T>
 	}
 
 	/**
-	 * Returns the number of elements in this stack.
+	 * Returns the number of elements in this lab3.stack.
 	 */
 	public int size()
 	{
@@ -92,7 +92,7 @@ public class GenericStack<T> implements Stack<T>
 	}
 
 	/**
-	 * Returns <code>true</code> if stack list contains no elements.
+	 * Returns <code>true</code> if lab3.stack list contains no elements.
 	 */
 	@Override
 	public boolean isEmpty()
