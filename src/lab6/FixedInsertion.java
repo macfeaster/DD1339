@@ -9,7 +9,7 @@ public class FixedInsertion extends Sort
 {
 	/**
 	 * Sorts the array into ascending numerical order.
-	 * Uses the fixed pivot v[0], and insertion sort.
+	 * Uses the fixed pivot v[mid], and insertion sort.
 	 *
 	 * @param v			Array to sort
 	 */
@@ -30,6 +30,6 @@ public class FixedInsertion extends Sort
 	@Override
 	protected int pivot(int first, int last)
 	{
-		return first;
+		return (first + last) / 2;
 	}
 }

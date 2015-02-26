@@ -11,7 +11,7 @@ import java.util.Random;
  */
 public final class Data {
 	public enum Order {
-		RANDOM, ASCENDING, DESCENDING
+		RANDOM, ASCENDING, DESCENDING, SAME
 	}
 
 	private final int max; // The maximum data value
@@ -58,11 +58,23 @@ public final class Data {
 		final Random rand = new Random();
 		int[] v = new int[n];
 
-		for (int i = 0; i < n; i++) {
-			v[i] = 1 + rand.nextInt(max);
+		if (order == Order.SAME)
+		{
+			int num = 1 + rand.nextInt(max);
+
+			for (int i = 0; i < n; i++)
+				v[i] = num;
 		}
+		else
+		{
+			for (int i = 0; i < n; i++) {
+				v[i] = 1 + rand.nextInt(max);
+			}
+		}
+
 		switch (order) {
 			case RANDOM:
+			case SAME:
 				break; // Elements already in random order.
 			case ASCENDING:
 				Arrays.sort(v);
@@ -77,6 +89,11 @@ public final class Data {
 				break;
 		}
 		return v;
+	}
+
+	public Order getOrder()
+	{
+		return order;
 	}
 
 	/**

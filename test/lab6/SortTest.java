@@ -2,6 +2,7 @@ package lab6;
 
 import lab6.util.Data;
 import lab6.util.Sort;
+import lab6.util.Stopwatch;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,47 +14,52 @@ public class SortTest
 	Sort[] algorithms;
 
 	@Before
-	public void setUp() throws Exception
+	public void setUp()
 	{
 		data = new Data[][] {
 				new Data[] {
 						new Data(100, Integer.MAX_VALUE, Data.Order.ASCENDING),
-						new Data(200, Integer.MAX_VALUE, Data.Order.ASCENDING),
-						new Data(400, Integer.MAX_VALUE, Data.Order.ASCENDING),
-						new Data(800, Integer.MAX_VALUE, Data.Order.ASCENDING),
-						new Data(1600, Integer.MAX_VALUE, Data.Order.ASCENDING),
-						new Data(3200, Integer.MAX_VALUE, Data.Order.ASCENDING),
-						new Data(6400, Integer.MAX_VALUE, Data.Order.ASCENDING),
-						new Data(12800, Integer.MAX_VALUE, Data.Order.ASCENDING),
-						new Data(25600, Integer.MAX_VALUE, Data.Order.ASCENDING),
-						new Data(51200, Integer.MAX_VALUE, Data.Order.ASCENDING),
-						new Data(102400, Integer.MAX_VALUE, Data.Order.ASCENDING)
+						new Data(500, Integer.MAX_VALUE, Data.Order.ASCENDING),
+						new Data(1000, Integer.MAX_VALUE, Data.Order.ASCENDING),
+						new Data(5000, Integer.MAX_VALUE, Data.Order.ASCENDING),
+						new Data(10000, Integer.MAX_VALUE, Data.Order.ASCENDING),
+						new Data(50000, Integer.MAX_VALUE, Data.Order.ASCENDING),
+						new Data(100000, Integer.MAX_VALUE, Data.Order.ASCENDING),
+						new Data(500000, Integer.MAX_VALUE, Data.Order.ASCENDING),
+						new Data(1000000, Integer.MAX_VALUE, Data.Order.ASCENDING)
 				},
 				new Data[] {
 						new Data(100, Integer.MAX_VALUE, Data.Order.DESCENDING),
-						new Data(200, Integer.MAX_VALUE, Data.Order.DESCENDING),
-						new Data(400, Integer.MAX_VALUE, Data.Order.DESCENDING),
-						new Data(800, Integer.MAX_VALUE, Data.Order.DESCENDING),
-						new Data(1600, Integer.MAX_VALUE, Data.Order.DESCENDING),
-						new Data(3200, Integer.MAX_VALUE, Data.Order.DESCENDING),
-						new Data(6400, Integer.MAX_VALUE, Data.Order.DESCENDING),
-						new Data(12800, Integer.MAX_VALUE, Data.Order.DESCENDING),
-						new Data(25600, Integer.MAX_VALUE, Data.Order.DESCENDING),
-						new Data(51200, Integer.MAX_VALUE, Data.Order.DESCENDING),
-						new Data(102400, Integer.MAX_VALUE, Data.Order.DESCENDING)
+						new Data(500, Integer.MAX_VALUE, Data.Order.DESCENDING),
+						new Data(1000, Integer.MAX_VALUE, Data.Order.DESCENDING),
+						new Data(5000, Integer.MAX_VALUE, Data.Order.DESCENDING),
+						new Data(10000, Integer.MAX_VALUE, Data.Order.DESCENDING),
+						new Data(50000, Integer.MAX_VALUE, Data.Order.DESCENDING),
+						new Data(100000, Integer.MAX_VALUE, Data.Order.DESCENDING),
+						new Data(500000, Integer.MAX_VALUE, Data.Order.DESCENDING),
+						new Data(1000000, Integer.MAX_VALUE, Data.Order.DESCENDING)
 				},
 				new Data[] {
 						new Data(100, Integer.MAX_VALUE, Data.Order.RANDOM),
-						new Data(200, Integer.MAX_VALUE, Data.Order.RANDOM),
-						new Data(400, Integer.MAX_VALUE, Data.Order.RANDOM),
-						new Data(800, Integer.MAX_VALUE, Data.Order.RANDOM),
-						new Data(1600, Integer.MAX_VALUE, Data.Order.RANDOM),
-						new Data(3200, Integer.MAX_VALUE, Data.Order.RANDOM),
-						new Data(6400, Integer.MAX_VALUE, Data.Order.RANDOM),
-						new Data(12800, Integer.MAX_VALUE, Data.Order.RANDOM),
-						new Data(25600, Integer.MAX_VALUE, Data.Order.RANDOM),
-						new Data(51200, Integer.MAX_VALUE, Data.Order.RANDOM),
-						new Data(102400, Integer.MAX_VALUE, Data.Order.RANDOM)
+						new Data(500, Integer.MAX_VALUE, Data.Order.RANDOM),
+						new Data(1000, Integer.MAX_VALUE, Data.Order.RANDOM),
+						new Data(5000, Integer.MAX_VALUE, Data.Order.RANDOM),
+						new Data(10000, Integer.MAX_VALUE, Data.Order.RANDOM),
+						new Data(50000, Integer.MAX_VALUE, Data.Order.RANDOM),
+						new Data(100000, Integer.MAX_VALUE, Data.Order.RANDOM),
+						new Data(500000, Integer.MAX_VALUE, Data.Order.RANDOM),
+						new Data(1000000, Integer.MAX_VALUE, Data.Order.RANDOM)
+				},
+				new Data[] {
+						new Data(100, Integer.MAX_VALUE, Data.Order.SAME),
+						new Data(500, Integer.MAX_VALUE, Data.Order.SAME),
+						new Data(1000, Integer.MAX_VALUE, Data.Order.SAME),
+						new Data(5000, Integer.MAX_VALUE, Data.Order.SAME),
+						new Data(10000, Integer.MAX_VALUE, Data.Order.SAME),
+						new Data(50000, Integer.MAX_VALUE, Data.Order.SAME),
+						new Data(100000, Integer.MAX_VALUE, Data.Order.SAME),
+						new Data(500000, Integer.MAX_VALUE, Data.Order.SAME),
+						new Data(1000000, Integer.MAX_VALUE, Data.Order.SAME)
 				}
 		};
 
@@ -61,12 +67,13 @@ public class SortTest
 				new FixedPivot(),
 				new FixedInsertion(),
 				new RandomPivot(),
-				new RandomInsertion()
+				new RandomInsertion(),
+				new JavaSort()
 		};
 	}
 
 	@Test
-	public void testSortAscending() throws Exception
+	public void testSortAscending()
 	{
 		// Test sorting for ascending values
 		Data[] type = data[0];
@@ -88,7 +95,7 @@ public class SortTest
 	}
 
 	@Test
-	public void testSortDescending() throws Exception
+	public void testSortDescending()
 	{
 		// Test sorting for ascending values
 		Data[] type = data[1];
@@ -110,7 +117,7 @@ public class SortTest
 	}
 
 	@Test
-	public void testSortRandom() throws Exception
+	public void testSortRandom()
 	{
 		// Test sorting for ascending values
 		Data[] type = data[2];
@@ -131,6 +138,41 @@ public class SortTest
 		}
 	}
 
+	@Test
+	public void testTimeConsumption()
+	{
+		final int reps = 10;
+		final Stopwatch clock = new Stopwatch();
+
+		for (int i = 0; i < reps; i++)
+		{
+			// Per data type
+			for (Data[] type : data)
+			{
+				for (Sort alg : algorithms)
+				{
+					System.out.print("INSERT INTO quicksort VALUES(" + i + ", '" + type[0].getOrder() + "', '");
+					// Per data type (ascending, descending, random)
+					System.out.print(alg.getClass().getSimpleName() + "', ");
+
+					for (Data d : type)
+					{
+						clock.reset().start();
+
+						int[] data = d.get();
+
+						alg.sort(data);
+
+						long time = clock.stop().milliseconds();
+
+						System.out.print(time + ", ");
+					}
+
+					System.out.println("); ");
+				}
+			}
+		}
+	}
 
 	/**
 	 * Check whether a given int array is sorted.
