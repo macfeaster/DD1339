@@ -10,8 +10,8 @@ import java.util.NoSuchElementException;
  * Space complexity is &Theta;(n + m) where n is the number of vertices and m
  * the number of edges.
  * 
- * @author [Name]
- * @version [Date]
+ * @author Mauritz Zachrisson
+ * @version 4/22/2015
  */
 public class HashGraph implements Graph {
 	/**
