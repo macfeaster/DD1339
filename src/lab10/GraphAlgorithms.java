@@ -1,34 +1,101 @@
 package lab10;
 
+import java.util.Random;
+
 /**
- * An example implementation of depth first search.
+ * An example implementation of depth first search, with usage examples.
  * 
- * @author Stefan Nilsson
- * @version 2012-12-30
+ * @author Mauritz Zachrisson, Stefan Nilsson
+ * @version 4/32/2015, 2012-12-30
  */
 public class GraphAlgorithms
 {
+	// Internal sub-max field
+	private static int submax = 0;
+
 	/**
 	 * Builds an undirected graph and prints the components to stdout.
 	 * 
 	 * @param args
 	 *            not used
 	 */
-	public static void main(String[] args)
+	public static void main(String[] args) throws Exception
 	{
-		int size = 8;
-		Graph g = new MatrixGraph(size);
-		g.addBi(0, 1); //
-		g.addBi(2, 2); //   0---1   2---
-		g.addBi(0, 3); //   |   |   |  |
-		g.addBi(1, 4); //   3---4   ----
-		g.addBi(3, 4); //   |
-		g.addBi(5, 3); //   5       6---7
-		g.addBi(6, 7); //
+		// Generate graphs
+		Graph m = buildGraph(1000, MatrixGraph.class);
+		Graph h = buildGraph(1000, HashGraph.class);
+		long time;
 
-		System.out.printf("A graph: %s%n", g);
-		System.out.printf("%n%s%n", "Its components:");
-		printComponents(g);
+		time = System.currentTimeMillis();
+		System.out.printf("MatrixGraph: %s%n", m);
+		System.out.printf("Components in total: %d (max has %d vertices)%n", countComponents(m), maxComponent(m));
+		System.out.printf("Time delta: %d ms%n", System.currentTimeMillis() - time);
+
+		time = System.currentTimeMillis();
+		System.out.printf("HashGraph: %s%n", h);
+		System.out.printf("Components in total: %d (max has %d vertices)%n", countComponents(h), maxComponent(h));
+		System.out.printf("Time delta: %d ms%n", System.currentTimeMillis() - time);
+	}
+
+	public static Graph buildGraph(int size, Class<? extends Graph> alg) throws Exception
+	{
+		// Construct given Graph class
+		Graph g = alg.getDeclaredConstructor(int.class).newInstance(size);
+		Random r = new Random();
+
+		// Randomize both whether edge should be placed and edge endpoints
+		for (int i = 0; i < size; i++)
+			if (r.nextBoolean())
+				g.addBi(r.nextInt(size), r.nextInt(size));
+
+		return g;
+	}
+
+	public static int countComponents(Graph g)
+	{
+		// Initialize variables
+		int n = g.numVertices();
+		int c = 0;
+		boolean[] visited = new boolean[n];
+
+		// For all the vertices
+		for (int i = 0; i < n; i++)
+		{
+			if (!visited[i])
+			{
+				// Perform DFS
+				dfs(g, i, visited, (g1, v) -> {});
+				c++;
+			}
+		}
+
+		return c;
+	}
+
+
+	public static int maxComponent(Graph g)
+	{
+		// Initialize variables
+		int n = g.numVertices();
+		int max = 0;
+		boolean[] visited = new boolean[n];
+
+		// For all the vertices
+		for (int i = 0; i < n; i++)
+		{
+			if (!visited[i])
+			{
+				// Set submax to zero and count through DFS
+				submax = 0;
+				dfs(g, i, visited, (g1, v) -> submax++);
+
+				// If larger submax is found, replace max
+				if (submax > max)
+					max = submax;
+			}
+		}
+
+		return max;
 	}
 
 	/**
