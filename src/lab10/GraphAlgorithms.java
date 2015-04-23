@@ -26,11 +26,18 @@ public class GraphAlgorithms
 		Graph h = buildGraph(1000, HashGraph.class);
 		long time;
 
+		// Avoid JIT performance increase in tests
+		countComponents(m);
+		countComponents(m);
+		countComponents(m);
+
+		// Measure Matrix time
 		time = System.currentTimeMillis();
 		System.out.printf("MatrixGraph: %s%n", m);
 		System.out.printf("Components in total: %d (max has %d vertices)%n", countComponents(m), maxComponent(m));
 		System.out.printf("Time delta: %d ms%n", System.currentTimeMillis() - time);
 
+		// Measure Hash time
 		time = System.currentTimeMillis();
 		System.out.printf("HashGraph: %s%n", h);
 		System.out.printf("Components in total: %d (max has %d vertices)%n", countComponents(h), maxComponent(h));
